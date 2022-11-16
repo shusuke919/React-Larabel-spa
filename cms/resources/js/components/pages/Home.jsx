@@ -5,6 +5,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import MainTable from '../MainTable';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import PostFrom from '../PostFrom';
 
 
 
@@ -28,6 +29,9 @@ const headerList = ['名前','タスク内容','編集','完了']
 //  postsの状態を管理する
 const [posts,setPosts] = useState([])
 
+// フォームの入力値を管理するステートを定義
+const [formData, setFormData] = useState({name:'', content:''});
+
 
 useEffect(() => {
      getPostData();
@@ -47,8 +51,39 @@ axios
     .catch(() => {
       console.log('通信に失敗しました')
     });
-
   }
+
+  // 入力されたら（都度）入力値を変更するためのfunction
+  const inputChange = (e) => {
+    const key = e.target.name
+    const value = e.target.value;
+    formData[key] = value;
+    let data = Object.assign({}, formData);
+    setFormData(data);
+  }
+
+  const createPost = async() => {
+    // 空と弾く
+    if (formData == ''){
+      return;
+    }
+    await axios
+    .post('/api/post/create', {
+      name: formData.name,
+      content: formData.content
+    })
+    .then((res) => {
+      //戻り値をtodosにセット
+      const tempPosts = posts
+      tempPosts.push(res.data);
+      setPosts(tempPosts)
+      setFormData('');
+  })
+  .catch(error => {
+      console.log(error);
+  });
+  }
+
 // 空配列として定義する
   const rows = [];
   // POSTSの要素ごとにrowsで使える形式に変換
@@ -68,6 +103,10 @@ axios
       <div className='col-md-10'>
         <div className='card'>
           <h1>タスク管理</h1>
+          <Card className={classes.card}>
+            <PostFrom  data={formData} inputChange={inputChange}  btnFunc={createPost}/>
+          </Card>
+
           <Card className={classes.card}>
             {/* テーブル部分の定義 */}
             <MainTable headerList={headerList} rows={rows} />
