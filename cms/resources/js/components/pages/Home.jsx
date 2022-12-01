@@ -6,6 +6,7 @@ import MainTable from '../MainTable';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import PostFrom from '../PostFrom';
+import axios from 'axios';
 
 
 
@@ -20,8 +21,6 @@ const useStyles = makeStyles((theme) => createStyles({
 }));
 // ヘッダーのコンテンツ用の配列定義
 const headerList = ['名前','タスク内容','編集','完了']
-
-
 
  //定義したスタイルを利用するための設定
  const classes = useStyles();
@@ -38,7 +37,6 @@ useEffect(() => {
 },[])
 
 // バックエンドからpostsの一覧を取得する処理
-
 const getPostData = () => {
 axios
     .get('/api/posts')
@@ -60,6 +58,7 @@ axios
     formData[key] = value;
     let data = Object.assign({}, formData);
     setFormData(data);
+    console.log(data);
   }
 
   const createPost = async() => {

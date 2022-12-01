@@ -5,8 +5,8 @@ import {
     Route,
     Switch,
   } from 'react-router-dom';
-import Example from './pages/Example';
 import Home from './pages/Home';
+import Register from './pages/Register';
 
   function App() {
     return (
@@ -14,8 +14,9 @@ import Home from './pages/Home';
             <Switch>
              //ここに、pathと対応するコンポーネントを書いていく
              <Route path='/' exact component={Home} />
-             <Route path='/example' exact component={Example} />
+             <Route path='/r' exact component={Register} />
             </Switch>
+            
         </div>
     );
 }
