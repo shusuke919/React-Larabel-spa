@@ -6,7 +6,13 @@ import {
     Switch,
   } from 'react-router-dom';
 import Home from './pages/Home';
+import Login from './pages/Login';
 import Register from './pages/Register';
+import axios from 'axios';
+
+
+axios.defaults.baseURL = "http://127.0.0.1:8000/";
+
 
   function App() {
     return (
@@ -14,7 +20,8 @@ import Register from './pages/Register';
             <Switch>
              //ここに、pathと対応するコンポーネントを書いていく
              <Route path='/' exact component={Home} />
-             <Route path='/r' exact component={Register} />
+             <Route path='/register' exact component={Register} />
+             <Route path='/login' exact component={Login} />
             </Switch>
             
         </div>
