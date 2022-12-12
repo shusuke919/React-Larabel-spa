@@ -102,6 +102,7 @@ axios
       <div className='col-md-10'>
         <div className='card'>
           <h1>タスク管理</h1>
+          {console.log(localStorage)}
           <Card className={classes.card}>
             <PostFrom  data={formData} inputChange={inputChange}  btnFunc={createPost}/>
           </Card>
